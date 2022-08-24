@@ -2,13 +2,6 @@ import 'dart:async';
 import 'dart:io';
 
 class ApplicationFlavor {
-  final String flavorId;
-  final String applicationId;
-  final String applicationName;
-  final String deeplinkHost;
-
-  final Directory? flavorOverrides;
-
   ApplicationFlavor({
     required this.flavorId,
     required this.applicationId,
@@ -16,6 +9,13 @@ class ApplicationFlavor {
     required this.deeplinkHost,
     this.flavorOverrides,
   });
+
+  final String flavorId;
+  final String applicationId;
+  final String applicationName;
+  final String deeplinkHost;
+
+  final Directory? flavorOverrides;
 }
 
 // what is flavor?

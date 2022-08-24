@@ -1,20 +1,17 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'dart:async';
-
 import 'package:dcli/dcli.dart';
-import 'package:riverpod/riverpod.dart';
 
-import 'git_secrets_provider.dart';
 import 'secrets_provider.dart';
 import 'secrets_tmp_dir_mixin.dart';
 
 class EnvSecretsProvider extends SecretsProvider
     with SecretsProviderTmpDirMixin {
-  final keyJksKey = "UPLOAD_KEY";
-  final keyPropertiesKey = "UPLOAD_KEY_PROPERTIES";
-  final serviceKeyKey = "GOOGLE_SERVICE_KEY";
+  final keyJksKey = 'UPLOAD_KEY';
+  final keyPropertiesKey = 'UPLOAD_KEY_PROPERTIES';
+  final serviceKeyKey = 'GOOGLE_SERVICE_KEY';
 
   File _extractFile(
     String fileName,
@@ -42,11 +39,3 @@ class EnvSecretsProvider extends SecretsProvider
   FutureOr<File> getKeyProperty() =>
       _extractFile('key.properties', keyPropertiesKey);
 }
-
-final secretsStrategyMapProvider = StateProvider(
-  (_) => {
-    'env': (ref) => EnvSecretsProvider(),
-    'git': (ref) =>
-        GitSecretsProvider(ref.watch(applicationFlavor).applicationid),
-  },
-);

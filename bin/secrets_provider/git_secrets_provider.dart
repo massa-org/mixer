@@ -1,18 +1,17 @@
-import 'dart:io';
-
 import 'dart:async';
+import 'dart:io';
 
 import 'package:dcli/dcli.dart';
 
 import 'secrets_provider.dart';
 
 class GitSecretsProvider extends SecretsProvider {
+  GitSecretsProvider(this.secretsSubDirectory);
+
   final String secretsSubDirectory;
 
   final _tmpKey = DateTime.now().millisecondsSinceEpoch.toString();
-  late final secretsTmpDir = join("/tmp", 'mixer-secrets-$_tmpKey');
-
-  GitSecretsProvider(this.secretsSubDirectory);
+  late final secretsTmpDir = join('/tmp', 'mixer-secrets-$_tmpKey');
 
   @override
   FutureOr<void> init() {
@@ -20,7 +19,7 @@ class GitSecretsProvider extends SecretsProvider {
     final repositoryLink = env[envKey] ?? '';
     if (repositoryLink.isEmpty) {
       throw Exception(
-        'ENV variable "$envKey" with link to git with secrets repository does\'t provided',
+        'ENV variable "$envKey" that contains link to keys git repository. ',
       );
     }
 
