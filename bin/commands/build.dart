@@ -18,12 +18,25 @@ class BuildCommand extends Command<void> {
 
   @override
   ArgParser get argParser => ArgParser()
-    ..addOption('flavor', help: 'flavor to build')
+    ..addOption(
+      'deploy',
+      help: 'deploy strategy',
+      allowed: ['none', 'internal', 'beta', 'release'],
+      defaultsTo: 'none',
+    )
+    ..addOption(
+      'flavor',
+      help: 'which flavor build',
+    )
     ..addOption(
       'secrets',
       help: 'secrets provider for build',
       allowed: ['git', 'env', 'testing'],
       defaultsTo: 'git',
+    )
+    ..addOption(
+      'secretsRepository',
+      help: 'git secret repository, by default use env SECRETS_REPOSITORY',
     );
 
   @override
