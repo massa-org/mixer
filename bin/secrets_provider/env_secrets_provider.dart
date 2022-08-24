@@ -9,6 +9,8 @@ import 'secrets_tmp_dir_mixin.dart';
 
 class EnvSecretsProvider extends SecretsProvider
     with SecretsProviderTmpDirMixin {
+  static String providerName = 'env';
+
   final keyJksKey = 'UPLOAD_KEY';
   final keyPropertiesKey = 'UPLOAD_KEY_PROPERTIES';
   final serviceKeyKey = 'GOOGLE_SERVICE_KEY';

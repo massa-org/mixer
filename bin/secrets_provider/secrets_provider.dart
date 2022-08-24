@@ -3,6 +3,9 @@ import 'dart:io';
 
 import 'package:riverpod/riverpod.dart';
 
+import '../flavor_strategy/flavor_provider.dart';
+import 'env_secrets_provider.dart';
+import 'git_secrets_provider.dart';
 import 'testing_secret_provider.dart';
 
 abstract class SecretsProvider {
@@ -14,9 +17,21 @@ abstract class SecretsProvider {
   FutureOr<void> dispose() {}
 }
 
+final secretsProvidersMap = <String, FutureOr<SecretsProvider> Function(Ref)>{
+  GitSecretsProvider.providerName: (ref) async => ref
+      .watch(flavorProvider.future)
+      .then((value) => GitSecretsProvider(value.applicationId)),
+  TestingSecretsProvider.providerName: (_) => TestingSecretsProvider(),
+  EnvSecretsProvider.providerName: (_) => EnvSecretsProvider(),
+};
+
+final selectedSecretsProvider = StateProvider((_) => 'git');
+
 final secretsProvider = FutureProvider<SecretsProvider>(
   (ref) async {
-    final provider = TestingSecretsProvider();
+    final providerFn = secretsProvidersMap[ref.watch(selectedSecretsProvider)];
+    final provider = await providerFn!.call(ref);
+
     ref.onDispose(provider.dispose);
     await provider.init();
     return provider;

@@ -23,12 +23,12 @@ packages:
     source: hosted
     version: "3.1.6"
   args:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: args
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.3.0"
+    version: "2.3.1"
   async:
     dependency: transitive
     description:
@@ -477,6 +477,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
+  shutdown:
+    dependency: "direct main"
+    description:
+      name: shutdown
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.3"
   source_gen:
     dependency: transitive
     description:

@@ -10,6 +10,8 @@ import 'secrets_tmp_dir_mixin.dart';
 
 class TestingSecretsProvider extends SecretsProvider
     with SecretsProviderTmpDirMixin {
+  static String providerName = 'testing';
+
   @override
   FutureOr<File> getGoogleServiceKey() {
     throw Exception(
@@ -39,7 +41,7 @@ yes
   }
 
   @override
-  FutureOr<File> getKeyProperty() {
+  FutureOr<File> getKeyProperty() async {
     const content = '''
 storePassword=tmp_pass
 keyPassword=tmp_pass
@@ -47,6 +49,8 @@ keyAlias=key
 storeFile=../../build/key.jks
 ''';
     final keyFile = join(secretsTmpDir, 'key.property');
-    return File(keyFile)..writeAsString(content);
+    final file = File(keyFile);
+    await file.writeAsString(content);
+    return file;
   }
 }

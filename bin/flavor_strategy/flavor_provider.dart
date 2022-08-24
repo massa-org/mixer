@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:riverpod/riverpod.dart';
+
 class ApplicationFlavor {
   ApplicationFlavor({
     required this.flavorId,
@@ -35,3 +37,12 @@ abstract class FlatFlavorStrategy extends FlavorStrategy {}
 abstract class FlavorfullFlavorStrategy extends FlavorStrategy {}
 
 abstract class SpicyFlavorStrategy extends FlavorStrategy {}
+
+final flavorProvider = FutureProvider(
+  (_) => ApplicationFlavor(
+    flavorId: 'id',
+    applicationId: 'com.aldardigital.kizhingataxi.passenger',
+    applicationName: 'name',
+    deeplinkHost: 'host',
+  ),
+);

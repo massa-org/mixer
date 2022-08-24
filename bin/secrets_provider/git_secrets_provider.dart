@@ -6,9 +6,12 @@ import 'package:dcli/dcli.dart';
 import 'secrets_provider.dart';
 
 class GitSecretsProvider extends SecretsProvider {
-  GitSecretsProvider(this.secretsSubDirectory);
+  GitSecretsProvider(this.applicationId);
 
-  final String secretsSubDirectory;
+  static String providerName = 'git';
+
+  final String applicationId;
+  late String secretsDirectory = env['SECRETS_REPOSITORY_SUBDIR'] ?? 'keys';
 
   final _tmpKey = DateTime.now().millisecondsSinceEpoch.toString();
   late final secretsTmpDir = join('/tmp', 'mixer-secrets-$_tmpKey');
@@ -30,17 +33,23 @@ class GitSecretsProvider extends SecretsProvider {
 
   @override
   FutureOr<void> dispose() {
-    Directory(secretsTmpDir).deleteSync(recursive: true);
+    final dir = Directory(secretsTmpDir);
+    if (dir.existsSync()) {
+      dir.deleteSync(recursive: true);
+    }
+
     return super.dispose();
   }
 
   File _extractFile(String fileName) {
-    final file = File(join(secretsTmpDir, secretsSubDirectory, fileName));
+    final file = File(
+      join(secretsTmpDir, secretsDirectory, applicationId, fileName),
+    );
 
     if (!file.existsSync()) {
       throw Exception(
         '$fileName secret is not provider in git secrets repository\n'
-        'expected to be file "$secretsSubDirectory/$fileName" in repository',
+        'expected to be file "$applicationId/$fileName" in repository',
       );
     }
     return file;
