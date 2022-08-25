@@ -30,7 +30,7 @@ ArgParser getDefaultArgParser() => ArgParser()
   )
   ..addFlag(
     'use-fvm',
-    help: 'use `fvm flutter` and not `flutter` command',
+    help: 'use `fvm flutter` instead of `flutter` command',
   );
 
 Future<void> setArguments(ArgResults? argResults) async {
