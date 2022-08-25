@@ -1,3 +1,5 @@
+import 'package:dcli/dcli.dart';
+
 import 'build_step.dart';
 
 // detect and run 'code' generators after flavor overrides files
@@ -7,7 +9,11 @@ class PrebuildStep extends BuildStep {
   @override
   Future<void> run() async {
     await super.run();
-    throw UnimplementedError('$runtimeType unimplemented yet');
+    'flutter pub get'.start(progress: Progress.print());
+    'flutter pub run build_runner build --delete-conflicting-outputs'
+        .start(progress: Progress.print());
+    'flutter pub run icons_launcher:create'.start(progress: Progress.print());
+    'flutter pub run the_splash'.start(progress: Progress.print());
   }
 
   @override
