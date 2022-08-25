@@ -46,6 +46,9 @@ final flavorStrategyProvider = FutureProvider((ref) async {
       );
 
   await strategy.init();
+
+  ref.onDispose(strategy.dispose);
+
   return strategy;
 });
 

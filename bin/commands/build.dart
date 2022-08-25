@@ -3,17 +3,11 @@ import 'dart:async';
 import 'package:args/command_runner.dart';
 import 'package:dcli/dcli.dart';
 
-import 'steps/android_build_step.dart';
-import 'steps/android_google_fastlane_deploy_step.dart';
-import 'steps/android_sign_step.dart';
-import 'steps/apply_flavor_overrides_step.dart';
-import 'steps/clean_after_build_step.dart';
-import 'steps/configure_flavor_step.dart';
+import '../ref.dart';
+import '../secrets_provider/secrets_provider.dart';
+import 'steps/build_flavor_step.dart';
 import 'steps/configure_mixer_step.dart';
-import 'steps/configure_secrets_step.dart';
 import 'steps/git_check_step.dart';
-import 'steps/prebuild_step.dart';
-import 'steps/prepare_project_directory_step.dart';
 import 'steps/substep_step.dart';
 
 class BuildCommand extends Command<void> {
@@ -48,28 +42,20 @@ class BuildCommand extends Command<void> {
 
   @override
   FutureOr<void> run() async {
+    final flavor = argResults?['flavor'] as String?;
+    final secrets = argResults?['secrets'] as String?;
+    // TODO configure secretsRepository from args
+    if (secrets != null) {
+      ref.read(selectedSecretsProvider.notifier).update((_) => secrets);
+      await Future.microtask(() => null);
+    }
+
     final step = SubstepStep(
       [
         GitCheckStep(),
         // configure build system
         ConfigureMixerStep(),
-
-        PrepareProjectDirectoryStep(),
-        ConfigureFlavorStep(
-          userSelectedFlavor: argResults?['flavor'] as String?,
-        ),
-        // TODO set userselected secret provider
-        ConfigureSecretsStep(),
-
-        // configure project before build
-        ApplyFlavorOverridesStep(),
-        PrebuildStep(),
-
-        // build
-        AndroidSignStep(),
-        AndroidAppbundleBuildStep(),
-        AndroidGoogleFastlaneDeployStep(),
-        CleanAfterBuildStep(),
+        if (flavor == null) BuildAllFlavorStep() else buildFlavorStep(flavor)
       ],
       name: 'Build',
     );
