@@ -20,8 +20,7 @@ class BuildCommand extends Command<void> {
   ArgParser get argParser => getDefaultArgParser()
     ..addOption(
       'flavor',
-      help: 'which flavor build',
-      mandatory: true,
+      help: 'which flavor to build, can be omit for flat project type',
     );
 
   @override
