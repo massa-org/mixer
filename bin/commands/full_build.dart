@@ -24,20 +24,15 @@ ArgParser getDefaultArgParser() => ArgParser()
     defaultsTo: 'git',
   );
 
-class BuildCommand extends Command<void> {
+class FullBuildCommand extends Command<void> {
   @override
-  String get description => 'build application with selected flavor';
+  String get description => 'build all flavor for project';
 
   @override
-  String get name => 'build';
+  String get name => 'full_build';
 
   @override
-  ArgParser get argParser => getDefaultArgParser()
-    ..addOption(
-      'flavor',
-      help: 'which flavor build',
-      mandatory: true,
-    );
+  ArgParser get argParser => getDefaultArgParser();
 
   @override
   FutureOr<void> run() async {
@@ -54,7 +49,7 @@ class BuildCommand extends Command<void> {
         GitCheckStep(),
         // configure build system
         ConfigureMixerStep(),
-        buildFlavorStep(flavor)
+        BuildAllFlavorStep(),
       ],
       name: 'Build',
     );
