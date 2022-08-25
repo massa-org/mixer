@@ -19,7 +19,7 @@ ArgParser getDefaultArgParser() => ArgParser()
     defaultsTo: 'git',
   )
   ..addOption(
-    'secretsRepository',
+    'secretRepository',
     help: 'ssh link to repository with application secrets',
   );
 
