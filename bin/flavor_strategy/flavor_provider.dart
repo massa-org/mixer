@@ -3,46 +3,52 @@ import 'dart:io';
 
 import 'package:riverpod/riverpod.dart';
 
+import '../mixer_config/mixer_config.provider.dart';
+import 'flavor_config.dart';
+import 'strategies/flat_flavor_strategy.dart';
+import 'strategies/flavorful_flavor_strategy.dart';
+import 'strategies/spicy_flavor_strategy.dart';
+
 class ApplicationFlavor {
   ApplicationFlavor({
     required this.flavorId,
-    required this.applicationId,
-    required this.applicationName,
-    required this.deeplinkHost,
+    required this.config,
     this.flavorOverrides,
   });
 
   final String flavorId;
-  final String applicationId;
-  final String applicationName;
-  final String deeplinkHost;
-
+  final FlavorConfigModel config;
   final Directory? flavorOverrides;
+
+  @override
+  String toString() =>
+      // ignore: lines_longer_than_80_chars
+      'ApplicationFlavor(flavorId: $flavorId, config: $config,flavorOverrides: ${flavorOverrides?.path})';
 }
 
 // what is flavor?
 //  set of file overrides and config context
 abstract class FlavorStrategy {
-  FutureOr<void> init();
-  FutureOr<void> dispose();
+  FutureOr<void> init() {}
+  FutureOr<void> dispose() {}
 
   FutureOr<List<ApplicationFlavor>> getFlavorList();
 
   FutureOr<ApplicationFlavor> getFallbackFlavor();
-  FutureOr<ApplicationFlavor?> getFlavor(String falvorId);
+  FutureOr<ApplicationFlavor?> getFlavor(String flavorId);
 }
 
-abstract class FlatFlavorStrategy extends FlavorStrategy {}
+final flavorStrategyProvider = FutureProvider((ref) async {
+  final strategy = ref.watch(mixerConfigProvider).map(
+        flat: (_) => FlatFlavorStrategy(),
+        flavorful: (_) => FlavorfullFlavorStrategy(),
+        spicy: (_) => SpicyFlavorStrategy(),
+      );
 
-abstract class FlavorfullFlavorStrategy extends FlavorStrategy {}
+  await strategy.init();
+  return strategy;
+});
 
-abstract class SpicyFlavorStrategy extends FlavorStrategy {}
-
-final flavorProvider = FutureProvider(
-  (_) => ApplicationFlavor(
-    flavorId: 'id',
-    applicationId: 'com.aldardigital.kizhingataxi.passenger',
-    applicationName: 'name',
-    deeplinkHost: 'host',
-  ),
+final flavorProvider = StateProvider<AsyncValue<ApplicationFlavor>>(
+  (_) => const AsyncLoading(),
 );

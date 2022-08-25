@@ -20,7 +20,7 @@ abstract class SecretsProvider {
 final secretsProvidersMap = <String, FutureOr<SecretsProvider> Function(Ref)>{
   GitSecretsProvider.providerName: (ref) async => ref
       .watch(flavorProvider.future)
-      .then((value) => GitSecretsProvider(value.applicationId)),
+      .then((value) => GitSecretsProvider(value.config.applicationId)),
   TestingSecretsProvider.providerName: (_) => TestingSecretsProvider(),
   EnvSecretsProvider.providerName: (_) => EnvSecretsProvider(),
 };

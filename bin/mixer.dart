@@ -27,8 +27,9 @@ void main(List<String> args) async {
       ..addCommand(BuildCommand());
 
     await runner.run(args);
-  } catch (error) {
+  } catch (error, stackTrace) {
     print(red(error.toString()));
+    print(stackTrace);
   } finally {
     await shutdown.shutdown();
   }
