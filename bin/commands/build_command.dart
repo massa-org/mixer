@@ -3,8 +3,6 @@ import 'dart:async';
 import 'package:args/command_runner.dart';
 import 'package:dcli/dcli.dart';
 
-import '../ref.dart';
-import '../secrets_provider/secrets_provider.dart';
 import 'argument_parser.dart';
 import 'steps/build_flavor_step.dart';
 import 'steps/configure_mixer_step.dart';
@@ -28,13 +26,8 @@ class BuildCommand extends Command<void> {
 
   @override
   FutureOr<void> run() async {
+    await setArguments(argResults);
     final flavor = argResults?['flavor'] as String?;
-    final secrets = argResults?['secrets'] as String?;
-    // TODO configure secretsRepository from args
-    if (secrets != null) {
-      ref.read(selectedSecretsProvider.notifier).update((_) => secrets);
-      await Future.microtask(() => null);
-    }
 
     final step = SubstepStep(
       [

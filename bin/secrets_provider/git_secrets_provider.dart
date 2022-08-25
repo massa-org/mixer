@@ -3,7 +3,9 @@ import 'dart:io';
 
 import 'package:dcli/dcli.dart';
 
+import '../ref.dart';
 import 'secrets_provider.dart';
+import 'secrets_repository_provider.dart';
 
 class GitSecretsProvider extends SecretsProvider {
   GitSecretsProvider(this.applicationId);
@@ -18,11 +20,12 @@ class GitSecretsProvider extends SecretsProvider {
 
   @override
   FutureOr<void> init() {
-    const envKey = 'SECRETS_REPOSITORY';
-    final repositoryLink = env[envKey] ?? '';
+    final repositoryLink = ref.read(secretsRepositoryProvider) ?? '';
     if (repositoryLink.isEmpty) {
       throw Exception(
-        'ENV variable "$envKey" that contains link to keys git repository. ',
+        'secretsRepository is not provided, '
+        'set args --secretRepository, '
+        'or ENV variable SECRET_REPOSITOR',
       );
     }
 

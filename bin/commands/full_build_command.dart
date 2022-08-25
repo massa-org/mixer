@@ -23,12 +23,7 @@ class FullBuildCommand extends Command<void> {
 
   @override
   FutureOr<void> run() async {
-    final secrets = argResults?['secrets'] as String?;
-    // TODO configure secretsRepository from args
-    if (secrets != null) {
-      ref.read(selectedSecretsProvider.notifier).update((_) => secrets);
-      await Future.microtask(() => null);
-    }
+    await setArguments(argResults);
 
     final step = SubstepStep(
       [
