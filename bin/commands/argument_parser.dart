@@ -21,6 +21,10 @@ ArgParser getDefaultArgParser() => ArgParser()
   ..addOption(
     'secretRepository',
     help: 'ssh link to repository with application secrets',
+  )
+  ..addOption(
+    'version',
+    help: 'override application version in format v0.0.0+0',
   );
 
 Future<void> setArguments(ArgResults? argResults) async {
