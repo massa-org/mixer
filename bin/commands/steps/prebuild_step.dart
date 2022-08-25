@@ -14,6 +14,8 @@ class PrebuildStep extends BuildStep {
         .start(progress: Progress.print());
     'flutter pub run icons_launcher:create'.start(progress: Progress.print());
     'flutter pub run the_splash'.start(progress: Progress.print());
+
+    './tool/replace_params.dart'.start(progress: Progress.print());
   }
 
   @override

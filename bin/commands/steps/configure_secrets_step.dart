@@ -14,6 +14,7 @@ class ConfigureSecretsStep extends BuildStep {
       // await riverpod update
       await Future.microtask(() => null);
     }
+    await ref.read(secretsProvider.future);
   }
 
   @override

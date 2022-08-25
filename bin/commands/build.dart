@@ -3,12 +3,17 @@ import 'dart:async';
 import 'package:args/command_runner.dart';
 import 'package:dcli/dcli.dart';
 
+import 'steps/android_build_step.dart';
+import 'steps/android_google_fastlane_deploy_step.dart';
 import 'steps/android_sign_step.dart';
 import 'steps/apply_flavor_overrides_step.dart';
+import 'steps/clean_after_build_step.dart';
 import 'steps/configure_flavor_step.dart';
 import 'steps/configure_mixer_step.dart';
 import 'steps/configure_secrets_step.dart';
+import 'steps/git_check_step.dart';
 import 'steps/prebuild_step.dart';
+import 'steps/prepare_project_directory_step.dart';
 import 'steps/substep_step.dart';
 
 class BuildCommand extends Command<void> {
@@ -45,17 +50,16 @@ class BuildCommand extends Command<void> {
   FutureOr<void> run() async {
     final step = SubstepStep(
       [
+        GitCheckStep(),
         // configure build system
-        SubstepStep(
-          [
-            ConfigureMixerStep(),
-            ConfigureFlavorStep(
-              userSelectedFlavor: argResults?['flavor'] as String?,
-            ),
-            ConfigureSecretsStep(),
-          ],
-          name: 'ConfureBuildSystem',
+        ConfigureMixerStep(),
+
+        PrepareProjectDirectoryStep(),
+        ConfigureFlavorStep(
+          userSelectedFlavor: argResults?['flavor'] as String?,
         ),
+        // TODO set userselected secret provider
+        ConfigureSecretsStep(),
 
         // configure project before build
         ApplyFlavorOverridesStep(),
@@ -63,6 +67,9 @@ class BuildCommand extends Command<void> {
 
         // build
         AndroidSignStep(),
+        AndroidAppbundleBuildStep(),
+        AndroidGoogleFastlaneDeployStep(),
+        CleanAfterBuildStep(),
       ],
       name: 'Build',
     );
