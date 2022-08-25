@@ -2,6 +2,7 @@ import 'package:dcli/dcli.dart';
 import 'package:riverpod/riverpod.dart';
 
 import '../../flavor_strategy/flavor_provider.dart';
+import '../../fvm/fvm_provider.dart';
 import '../../ref.dart';
 import '../../version/version_provider.dart';
 import 'build_step.dart';
@@ -13,11 +14,14 @@ class PrebuildStep extends BuildStep {
   @override
   Future<void> run() async {
     await super.run();
-    'flutter pub get'.start(progress: Progress.print());
-    'flutter pub run build_runner build --delete-conflicting-outputs'
+    final flutterExec = ref.read(useFvmProvider) ? 'fvm flutter' : 'flutter';
+
+    '$flutterExec pub get'.start(progress: Progress.print());
+    '$flutterExec pub run build_runner build --delete-conflicting-outputs'
         .start(progress: Progress.print());
-    'flutter pub run icons_launcher:create'.start(progress: Progress.print());
-    'flutter pub run the_splash'.start(progress: Progress.print());
+    '$flutterExec pub run icons_launcher:create'
+        .start(progress: Progress.print());
+    '$flutterExec pub run the_splash'.start(progress: Progress.print());
 
     final version = ref.read(versionProvider);
     final flavor = (await ref.read(flavorProvider.future)).config;
