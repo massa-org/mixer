@@ -5,34 +5,26 @@ import 'package:dcli/dcli.dart';
 
 import '../ref.dart';
 import '../secrets_provider/secrets_provider.dart';
+import 'argument_parser.dart';
 import 'steps/build_flavor_step.dart';
 import 'steps/configure_mixer_step.dart';
 import 'steps/git_check_step.dart';
 import 'steps/substep_step.dart';
 
-ArgParser getDefaultArgParser() => ArgParser()
-  ..addOption(
-    'deploy',
-    help: 'deploy strategy',
-    allowed: ['none', 'internal', 'beta', 'release'],
-    defaultsTo: 'none',
-  )
-  ..addOption(
-    'secrets',
-    help: 'secrets provider for build',
-    allowed: ['git', 'env', 'testing'],
-    defaultsTo: 'git',
-  );
-
-class FullBuildCommand extends Command<void> {
+class BuildCommand extends Command<void> {
   @override
-  String get description => 'build all flavor for project';
+  String get description => 'build application with selected flavor';
 
   @override
-  String get name => 'full_build';
+  String get name => 'build';
 
   @override
-  ArgParser get argParser => getDefaultArgParser();
+  ArgParser get argParser => getDefaultArgParser()
+    ..addOption(
+      'flavor',
+      help: 'which flavor build',
+      mandatory: true,
+    );
 
   @override
   FutureOr<void> run() async {
@@ -49,7 +41,7 @@ class FullBuildCommand extends Command<void> {
         GitCheckStep(),
         // configure build system
         ConfigureMixerStep(),
-        BuildAllFlavorStep(),
+        buildFlavorStep(flavor)
       ],
       name: 'Build',
     );
