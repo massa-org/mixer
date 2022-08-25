@@ -8,10 +8,11 @@ import '../../ref.dart';
 import '../../utils/decode_yaml.dart';
 import 'build_step.dart';
 
-// read project configuration and result of arg parses
+// read mixer configuration from project folder
 class ConfigureMixerStep extends BuildStep {
   @override
   Future<void> run() async {
+    await super.run();
     final mixerConfig = File(join(pwd, 'mixer_config.yaml'));
     var config = const MixerConfig.flat();
     if (mixerConfig.existsSync()) {

@@ -1,16 +1,15 @@
 import 'dart:async';
-import 'dart:io';
 
-import 'package:args/args.dart';
 import 'package:args/command_runner.dart';
 import 'package:dcli/dcli.dart';
 
-import '../ref.dart';
-import '../secrets_provider/secrets_provider.dart';
 import 'steps/android_sign_step.dart';
-import 'steps/apply_flavor_step.dart';
+import 'steps/apply_flavor_overrides_step.dart';
 import 'steps/configure_flavor_step.dart';
-import 'steps/mixer_configuration_step.dart';
+import 'steps/configure_mixer_step.dart';
+import 'steps/configure_secrets_step.dart';
+import 'steps/prebuild_step.dart';
+import 'steps/substep_step.dart';
 
 class BuildCommand extends Command<void> {
   @override
@@ -44,54 +43,31 @@ class BuildCommand extends Command<void> {
 
   @override
   FutureOr<void> run() async {
-    final steps = [
-      ConfigureMixerStep(),
-      ConfigureFlavorStep(userSelectedFlavor: argResults?['flavor'] as String?),
-      ApplyFlavorOverridesStep(),
-      AndroidSignStep(),
-    ];
+    final step = SubstepStep(
+      [
+        // configure build system
+        SubstepStep(
+          [
+            ConfigureMixerStep(),
+            ConfigureFlavorStep(
+              userSelectedFlavor: argResults?['flavor'] as String?,
+            ),
+            ConfigureSecretsStep(),
+          ],
+          name: 'ConfureBuildSystem',
+        ),
+
+        // configure project before build
+        ApplyFlavorOverridesStep(),
+        PrebuildStep(),
+
+        // build
+        AndroidSignStep(),
+      ],
+      name: 'Build',
+    );
 
     print(green('start build application in directory $pwd'));
-    var currentStep = 1;
-    for (final v in steps) {
-      print(
-        green(
-          '\n\n($currentStep/${steps.length}): ${v.runtimeType} ${v.summary}',
-        ),
-      );
-      await v.run();
-      currentStep += 1;
-    }
-
-    // final secret = argResults?['secrets'] as String?;
-    // ref.read(selectedSecretsProvider.notifier).update((v) => secret ?? v);
-    // await Future.microtask(() {});
-
-    // print(green('# fetch secrets and sign'));
-    // final secrets = await ref.read(secretsProvider.future);
-    // final keyProperties = await secrets.getKeyProperty();
-    // final keyJks = await secrets.getKeyJks();
-
-    // keyJks.copySync('./build/key.jks');
-    // File('./android/key.properties').writeAsStringSync(
-    //   keyProperties
-    //       .readAsLinesSync()
-    //       .map((e) =>
-    //           e.startsWith('storeFile') ? 'storeFile=../../build/key.jks' : e)
-    //       .join('\n'),
-    // );
-    // final flutterCommand = 'flutter';
-
-    // print(green('# prebuild'));
-    // '$flutterCommand pub get'.start(progress: Progress.print());
-    // '$flutterCommand pub run build_runner build --delete-conflicting-outputs'
-    //     .start(progress: Progress.print());
-    // '$flutterCommand pub run icons_launcher:create'
-    //     .start(progress: Progress.print());
-    // '$flutterCommand pub run the_splash'.start(progress: Progress.print());
-
-    // print(green('# replace flavors params'));
-
-    // './tool/build.sh'.start(progress: Progress.print());
+    await step.run();
   }
 }

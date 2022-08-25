@@ -2,7 +2,8 @@ import 'build_step.dart';
 
 class AndroidSignStep extends BuildStep {
   @override
-  Future<void> run() {
+  Future<void> run() async {
+    await super.run();
     throw UnimplementedError('$runtimeType is not implemented yet');
   }
 

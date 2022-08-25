@@ -1,7 +1,5 @@
 import 'dart:async';
 
-import '../../utils/decode_yaml.dart';
-import '../flavor_config.dart';
 import '../flavor_provider.dart';
 
 class SpicyFlavorStrategy extends FlavorStrategy {

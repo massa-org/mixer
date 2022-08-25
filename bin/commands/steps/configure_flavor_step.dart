@@ -5,6 +5,7 @@ import '../../mixer_config/mixer_config.provider.dart';
 import '../../ref.dart';
 import 'build_step.dart';
 
+// get user selected flavor and get it data with use of FlavorStrategy
 class ConfigureFlavorStep extends BuildStep {
   ConfigureFlavorStep({this.userSelectedFlavor});
 
@@ -12,6 +13,7 @@ class ConfigureFlavorStep extends BuildStep {
 
   @override
   Future<void> run() async {
+    await super.run();
     final flavorStrategy = await ref.read(flavorStrategyProvider.future);
     ApplicationFlavor flavor;
     if (userSelectedFlavor != null) {
