@@ -2,6 +2,7 @@ import 'package:riverpod/riverpod.dart';
 
 import '../../flavor_strategy/flavor_provider.dart';
 import '../../ref.dart';
+import '../android_build_configuration.dart';
 import 'android_build_step.dart';
 import 'android_google_fastlane_deploy_step.dart';
 import 'android_sign_step.dart';
@@ -29,7 +30,8 @@ BuildStep buildFlavorStep(String? flavorId) {
         [
           AndroidSignStep(),
           AndroidAppbundleBuildStep(),
-          AndroidGoogleFastlaneDeployStep()
+          if (ref.read(buildApkProvider)) AndroidApkBuildStep(),
+          if (ref.read(buildAabProvider)) AndroidGoogleFastlaneDeployStep()
         ],
         name: 'AndroidBuild',
       ),

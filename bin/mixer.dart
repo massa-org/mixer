@@ -1,4 +1,4 @@
-#! /usr/bin/env dcli
+#! /usr/bin/env dart
 // ignore_for_file: avoid_catches_without_on_clauses
 
 // ignore: prefer_relative_imports

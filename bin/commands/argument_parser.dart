@@ -6,6 +6,7 @@ import '../ref.dart';
 import '../secrets_provider/secrets_provider.dart';
 import '../secrets_provider/secrets_repository_provider.dart';
 import '../version/version_provider.dart';
+import 'android_build_configuration.dart';
 
 ArgParser getDefaultArgParser() => ArgParser()
   ..addOption(
@@ -31,6 +32,16 @@ ArgParser getDefaultArgParser() => ArgParser()
   ..addFlag(
     'use-fvm',
     help: 'use `fvm flutter` instead of `flutter` command',
+  )
+  ..addFlag(
+    'apk',
+    help: 'force build apk file',
+    negatable: false,
+  )
+  ..addFlag(
+    'aab',
+    help: 'force build aab file',
+    defaultsTo: true,
   );
 
 Future<void> setArguments(ArgResults? argResults) async {
@@ -45,5 +56,14 @@ Future<void> setArguments(ArgResults? argResults) async {
 
   ref.read(versionProvider.notifier).update((_) => getVersion(argResults));
   ref.read(useFvmProvider.notifier).update((_) => getUseFvm(argResults));
+
+  ref
+      .read(buildAabProvider.notifier)
+      .update((state) => (argResults?['aab'] as bool?) ?? state);
+
+  ref
+      .read(buildApkProvider.notifier)
+      .update((state) => (argResults?['apk'] as bool?) ?? state);
+
   await Future.microtask(() => null);
 }

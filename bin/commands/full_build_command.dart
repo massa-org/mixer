@@ -3,8 +3,6 @@ import 'dart:async';
 import 'package:args/command_runner.dart';
 import 'package:dcli/dcli.dart';
 
-import '../ref.dart';
-import '../secrets_provider/secrets_provider.dart';
 import 'argument_parser.dart';
 import 'steps/build_flavor_step.dart';
 import 'steps/configure_mixer_step.dart';
