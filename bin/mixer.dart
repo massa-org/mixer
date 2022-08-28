@@ -6,7 +6,6 @@ import 'package:args/command_runner.dart';
 import 'package:dcli/dcli.dart';
 import 'package:shutdown/shutdown.dart' as shutdown;
 
-import 'commands/bake_command.dart';
 import 'commands/build_command.dart';
 import 'commands/full_build_command.dart';
 import 'commands/switch_command.dart';
@@ -29,8 +28,7 @@ void main(List<String> args) async {
     final runner = CommandRunner<void>('mixer', 'build system for reduce fat')
       ..addCommand(BuildCommand())
       ..addCommand(FullBuildCommand())
-      ..addCommand(SwitchFlavorCommand())
-      ..addCommand(BakeCommand());
+      ..addCommand(SwitchFlavorCommand());
 
     await runner.run(args);
   } catch (error, stackTrace) {
