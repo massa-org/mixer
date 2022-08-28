@@ -29,6 +29,11 @@ ArgParser getDefaultArgParser() => ArgParser()
     'version',
     help: 'override application version in format v0.0.0+0',
   )
+  ..addOption(
+    'output',
+    abbr: 'o',
+    help: 'output file',
+  )
   ..addFlag(
     'use-fvm',
     help: 'use `fvm flutter` instead of `flutter` command',
@@ -41,7 +46,7 @@ ArgParser getDefaultArgParser() => ArgParser()
   ..addFlag(
     'aab',
     help: 'force build aab file',
-    defaultsTo: true,
+    negatable: false,
   );
 
 Future<void> setArguments(ArgResults? argResults) async {
@@ -57,13 +62,7 @@ Future<void> setArguments(ArgResults? argResults) async {
   ref.read(versionProvider.notifier).update((_) => getVersion(argResults));
   ref.read(useFvmProvider.notifier).update((_) => getUseFvm(argResults));
 
-  ref
-      .read(buildAabProvider.notifier)
-      .update((state) => (argResults?['aab'] as bool?) ?? state);
-
-  ref
-      .read(buildApkProvider.notifier)
-      .update((state) => (argResults?['apk'] as bool?) ?? state);
+  setAndroidBuildConfiguration(argResults);
 
   await Future.microtask(() => null);
 }

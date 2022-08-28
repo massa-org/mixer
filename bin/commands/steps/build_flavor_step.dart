@@ -11,6 +11,7 @@ import 'build_step.dart';
 import 'clean_after_build_step.dart';
 import 'configure_flavor_step.dart';
 import 'configure_secrets_step.dart';
+import 'copy_output_step.dart';
 import 'prebuild_step.dart';
 import 'substep_step.dart';
 
@@ -35,6 +36,7 @@ BuildStep buildFlavorStep(String? flavorId) {
         name: 'AndroidBuild',
       ),
       CleanAfterBuildStep(),
+      if (ref.read(outputFileProvider) != null) CopyOutputStep(),
     ],
     name: 'BuildFlavor${name[0].toUpperCase()}${name.substring(1)}',
   );
