@@ -29,9 +29,8 @@ BuildStep buildFlavorStep(String? flavorId) {
       SubstepStep(
         [
           AndroidSignStep(),
-          AndroidAppbundleBuildStep(),
+          if (ref.read(buildAabProvider)) AndroidAppbundleBuildStep(),
           if (ref.read(buildApkProvider)) AndroidApkBuildStep(),
-          if (ref.read(buildAabProvider)) AndroidGoogleFastlaneDeployStep()
         ],
         name: 'AndroidBuild',
       ),
