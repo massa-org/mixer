@@ -1,4 +1,5 @@
 import 'package:args/args.dart';
+import 'package:dcli/dcli.dart';
 
 import '../fvm/detect_fvm.dart';
 import '../fvm/fvm_provider.dart';
@@ -34,6 +35,11 @@ ArgParser getDefaultArgParser() => ArgParser()
     abbr: 'o',
     help: 'output file',
   )
+  ..addOption(
+    'output-directory',
+    abbr: 'd',
+    help: 'directory for copy all flavors',
+  )
   ..addFlag(
     'use-fvm',
     help: 'use `fvm flutter` instead of `flutter` command',
@@ -42,11 +48,13 @@ ArgParser getDefaultArgParser() => ArgParser()
     'apk',
     help: 'force build apk file',
     negatable: false,
+    defaultsTo: null,
   )
   ..addFlag(
     'aab',
     help: 'force build aab file',
     negatable: false,
+    defaultsTo: null,
   );
 
 Future<void> setArguments(ArgResults? argResults) async {

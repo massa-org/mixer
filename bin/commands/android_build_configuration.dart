@@ -1,4 +1,5 @@
 import 'package:args/args.dart';
+import 'package:dcli/dcli.dart';
 import 'package:riverpod/riverpod.dart';
 
 import '../ref.dart';
@@ -10,6 +11,11 @@ final buildAabProvider = StateProvider((_) => false);
 void setAndroidBuildConfiguration(ArgResults? argResults) {
   final output = argResults?['output'] as String?;
   ref.read(outputFileProvider.notifier).update((state) => output ?? state);
+
+  final outputDirectory = argResults?['output-directory'] as String?;
+  ref
+      .read(outputDirectoryProvider.notifier)
+      .update((state) => outputDirectory ?? state);
 
   if (output?.endsWith('apk') == true) {
     ref.read(buildApkProvider.notifier).update((_) => true);

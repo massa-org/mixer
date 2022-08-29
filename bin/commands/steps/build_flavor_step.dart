@@ -36,7 +36,9 @@ BuildStep buildFlavorStep(String? flavorId) {
         name: 'AndroidBuild',
       ),
       CleanAfterBuildStep(),
-      if (ref.read(outputFileProvider) != null) CopyOutputStep(),
+      if (ref.read(outputFileProvider) != null ||
+          ref.read(outputDirectoryProvider) != null)
+        CopyOutputStep(),
     ],
     name: 'BuildFlavor${name[0].toUpperCase()}${name.substring(1)}',
   );
