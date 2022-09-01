@@ -25,7 +25,7 @@ class GitSecretsProvider extends SecretsProvider {
       throw Exception(
         'secretsRepository is not provided, '
         'set args --secretRepository, '
-        'or ENV variable SECRET_REPOSITOR',
+        'or ENV variable SECRET_REPOSITORY',
       );
     }
 

@@ -24,7 +24,7 @@ String? getSecretRepository(ArgResults? result) =>
     getSecretRepositoryFromArgs(result) ?? getSecretRepositoryFromENV();
 
 String? getSecretRepositoryFromENV() {
-  const envKey = 'SECRETS_REPOSITORY';
+  const envKey = 'SECRET_REPOSITORY';
 
   return _validateRepositoryLink(
     env[envKey],
