@@ -26,6 +26,8 @@ class BuildCommand extends Command<void> {
   @override
   FutureOr<void> run() async {
     await setArguments(argResults);
+    checkBuildTargets();
+
     final flavor = argResults?['flavor'] as String?;
 
     final step = SubstepStep(

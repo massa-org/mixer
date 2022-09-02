@@ -22,6 +22,7 @@ class FullBuildCommand extends Command<void> {
   @override
   FutureOr<void> run() async {
     await setArguments(argResults);
+    checkBuildTargets();
 
     final step = SubstepStep(
       [

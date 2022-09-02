@@ -57,6 +57,16 @@ ArgParser getDefaultArgParser() => ArgParser()
     defaultsTo: null,
   );
 
+void checkBuildTargets() {
+  final hasBuildTarget =
+      ref.read(buildApkProvider) || ref.read(buildAabProvider);
+  if (!hasBuildTarget) {
+    throw Exception(
+      'nothing to build, target is not selected pass --apk or --aab option',
+    );
+  }
+}
+
 Future<void> setArguments(ArgResults? argResults) async {
   ref
       .read(secretsRepositoryProvider.notifier)
