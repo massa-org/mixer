@@ -1,10 +1,7 @@
-import 'package:riverpod/riverpod.dart';
-
 import '../../flavor_strategy/flavor_provider.dart';
 import '../../ref.dart';
 import '../android_build_configuration.dart';
 import 'android_build_step.dart';
-import 'android_google_fastlane_deploy_step.dart';
 import 'android_sign_step.dart';
 import 'apply_flavor_overrides_step.dart';
 import 'build_step.dart';
@@ -13,6 +10,7 @@ import 'configure_flavor_step.dart';
 import 'configure_secrets_step.dart';
 import 'copy_output_step.dart';
 import 'prebuild_step.dart';
+import 'replace_flavor_params_step.dart';
 import 'substep_step.dart';
 
 BuildStep buildFlavorStep(String? flavorId) {
@@ -25,6 +23,7 @@ BuildStep buildFlavorStep(String? flavorId) {
       // configure project before build
       ApplyFlavorOverridesStep(),
       PrebuildStep(),
+      ReplaceFlavorParamsStep(),
 
       // build
       SubstepStep(

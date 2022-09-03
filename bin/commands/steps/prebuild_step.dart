@@ -1,10 +1,7 @@
 import 'package:dcli/dcli.dart';
-import 'package:riverpod/riverpod.dart';
 
-import '../../flavor_strategy/flavor_provider.dart';
 import '../../fvm/fvm_provider.dart';
 import '../../ref.dart';
-import '../../version/version_provider.dart';
 import 'build_step.dart';
 
 // detect and run 'code' generators after flavor overrides files
@@ -22,12 +19,6 @@ class PrebuildStep extends BuildStep {
     '$flutterExec pub run icons_launcher:create'
         .start(progress: Progress.print());
     '$flutterExec pub run the_splash'.start(progress: Progress.print());
-
-    final version = ref.read(versionProvider);
-    final flavor = (await ref.read(flavorProvider.future)).config;
-
-    "./tool/replace_params.dart $version '${flavor.applicationId}' '${flavor.applicationName}' '${flavor.deepLinkHost}'"
-        .start(progress: Progress.print());
   }
 
   @override
