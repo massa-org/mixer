@@ -39,7 +39,7 @@ class CopyOutputStep extends BuildStep {
     final result = file.endsWith('.apk') || file.endsWith('.aab')
         ? file.substring(0, file.length - 4)
         : file;
-    print(red(outputDirectory.toString()));
+
     if (outputDirectory != null) {
       Directory(outputDirectory).createSync(recursive: true);
     }
