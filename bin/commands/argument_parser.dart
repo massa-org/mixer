@@ -84,3 +84,8 @@ Future<void> setArguments(ArgResults? argResults) async {
 
   await Future.microtask(() => null);
 }
+
+String? getFlavor(ArgResults? argResults) {
+  final flavor = argResults?['flavor'] as String?;
+  return flavor != null ? basename(flavor) : null;
+}

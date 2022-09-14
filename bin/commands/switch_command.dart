@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:args/command_runner.dart';
 import 'package:dcli/dcli.dart';
 
+import 'argument_parser.dart';
 import 'steps/apply_flavor_overrides_step.dart';
 import 'steps/configure_flavor_step.dart';
 import 'steps/configure_mixer_step.dart';
@@ -25,7 +26,7 @@ class SwitchFlavorCommand extends Command<void> {
 
   @override
   FutureOr<void> run() async {
-    final flavor = argResults?['flavor'] as String?;
+    final flavor = getFlavor(argResults);
 
     final step = SubstepStep(
       [

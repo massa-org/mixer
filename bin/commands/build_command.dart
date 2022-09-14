@@ -28,7 +28,7 @@ class BuildCommand extends Command<void> {
     await setArguments(argResults);
     checkBuildTargets();
 
-    final flavor = argResults?['flavor'] as String?;
+    final flavor = getFlavor(argResults);
 
     final step = SubstepStep(
       [

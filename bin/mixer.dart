@@ -8,6 +8,7 @@ import 'package:shutdown/shutdown.dart' as shutdown;
 
 import 'commands/build_command.dart';
 import 'commands/full_build_command.dart';
+import 'commands/prebuild_command.dart';
 import 'commands/switch_command.dart';
 import 'ref.dart';
 
@@ -28,7 +29,8 @@ void main(List<String> args) async {
     final runner = CommandRunner<void>('mixer', 'build system for reduce fat')
       ..addCommand(BuildCommand())
       ..addCommand(FullBuildCommand())
-      ..addCommand(SwitchFlavorCommand());
+      ..addCommand(SwitchFlavorCommand())
+      ..addCommand(PrebuildCommand());
 
     await runner.run(args);
   } catch (error, stackTrace) {
