@@ -13,6 +13,7 @@ import 'steps/configure_flavor_step.dart';
 import 'steps/configure_mixer_step.dart';
 import 'steps/git_check_step.dart';
 import 'steps/prebuild_step.dart';
+import 'steps/prepare_project_directory_step.dart';
 import 'steps/replace_flavor_params_step.dart';
 import 'steps/substep_step.dart';
 
@@ -50,6 +51,7 @@ class PrebuildCommand extends Command<void> {
         GitCheckStep(),
         // configure build system
         ConfigureMixerStep(),
+        PrepareProjectDirectoryStep(),
         ConfigureFlavorStep(userSelectedFlavor: flavor ?? 'fallback'),
 
         // configure project before build

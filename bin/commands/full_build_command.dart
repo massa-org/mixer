@@ -7,6 +7,7 @@ import 'argument_parser.dart';
 import 'steps/build_flavor_step.dart';
 import 'steps/configure_mixer_step.dart';
 import 'steps/git_check_step.dart';
+import 'steps/prepare_project_directory_step.dart';
 import 'steps/substep_step.dart';
 
 class FullBuildCommand extends Command<void> {
@@ -29,6 +30,7 @@ class FullBuildCommand extends Command<void> {
         GitCheckStep(),
         // configure build system
         ConfigureMixerStep(),
+        PrepareProjectDirectoryStep(),
         BuildAllFlavorStep(),
       ],
       name: 'Build',
