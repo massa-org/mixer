@@ -19,6 +19,9 @@ jobs:
       - name: Build runner
         run: dart pub run build_runner build --delete-conflicting-outputs
 
+      - name: Compile application
+        run: dart compile exe bin/mixer.dart -o mixer
+
       - name: Create GH release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
