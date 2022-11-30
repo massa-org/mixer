@@ -2,6 +2,8 @@
 // ignore_for_file: avoid_catches_without_on_clauses
 
 // ignore: prefer_relative_imports
+import 'dart:io';
+
 import 'package:args/command_runner.dart';
 import 'package:dcli/dcli.dart';
 import 'package:shutdown/shutdown.dart' as shutdown;
@@ -34,9 +36,11 @@ void main(List<String> args) async {
 
     await runner.run(args);
   } catch (error, stackTrace) {
+    print(orange('HERE'));
     print(red(error.toString()));
     print(stackTrace);
+    exitCode = 1;
   } finally {
-    await shutdown.shutdown();
+    await shutdown.shutdown(exitCode: exitCode);
   }
 }

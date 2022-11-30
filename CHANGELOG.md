@@ -1,3 +1,9 @@
-## 1.0.0
+## [0.0.2] - 2022-11-30
 
+fix:
+- exitCode on error
+
+## [0.0.1]
+
+feta:
 - Initial version.
