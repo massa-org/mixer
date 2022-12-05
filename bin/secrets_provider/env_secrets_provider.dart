@@ -27,7 +27,7 @@ class EnvSecretsProvider extends SecretsProvider
       );
     }
     return File(join(secretsTmpDir, fileName))
-      ..writeAsBytesSync(base64Decode(envContent!));
+      ..writeAsBytesSync(base64Decode(envContent!.replaceAll('\n', '')));
   }
 
   @override
