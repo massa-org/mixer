@@ -16,3 +16,5 @@
 
 
 .dart_tool/
+mixer
+.gitignore
