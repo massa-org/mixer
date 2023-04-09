@@ -1,5 +1,9 @@
 import 'dart:io';
 
+import 'package:dcli/dcli.dart';
+
+import '../../build_directory.dart';
+import '../../ref.dart';
 import 'build_step.dart';
 
 class PrepareProjectDirectoryStep extends BuildStep {
@@ -7,7 +11,7 @@ class PrepareProjectDirectoryStep extends BuildStep {
   Future<void> run() async {
     await super.run();
 
-    Directory('./build').createSync();
+    Directory(join(ref.read(buildDirectoryProvider), './build')).createSync();
   }
 
   @override

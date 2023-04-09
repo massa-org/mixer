@@ -1,3 +1,6 @@
+import 'package:dcli/dcli.dart';
+
+import '../../build_directory.dart';
 import '../../ref.dart';
 import '../../secrets_provider/secrets_provider.dart';
 import 'build_step.dart';
@@ -12,8 +15,12 @@ class AndroidSignStep extends BuildStep {
     final keyProperty = await secrets.getKeyProperty();
 
     // TODO check android sign configuration in build gradle
-    keyJks.copySync('./build/key.jks');
-    keyProperty.copySync('./android/key.properties');
+    keyJks.copySync(
+      join(ref.read(buildDirectoryProvider), './build/key.jks'),
+    );
+    keyProperty.copySync(
+      join(ref.read(buildDirectoryProvider), './android/key.properties'),
+    );
   }
 
   @override

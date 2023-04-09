@@ -9,6 +9,7 @@ import 'steps/configure_mixer_step.dart';
 import 'steps/git_check_step.dart';
 import 'steps/prepare_project_directory_step.dart';
 import 'steps/substep_step.dart';
+import 'steps/tmp_clone_step.dart';
 
 class BuildCommand extends Command<void> {
   @override
@@ -22,6 +23,10 @@ class BuildCommand extends Command<void> {
     ..addOption(
       'flavor',
       help: 'which flavor to build, can be omit for flat project type',
+    )
+    ..addFlag(
+      'clone',
+      help: 'clone project into /tmp and build it here',
     );
 
   @override
@@ -30,9 +35,9 @@ class BuildCommand extends Command<void> {
     checkBuildTargets();
 
     final flavor = getFlavor(argResults);
-
     final step = SubstepStep(
       [
+        ...TmpCloneStep.fromArg(argResults),
         GitCheckStep(),
         // configure build system
         ConfigureMixerStep(),

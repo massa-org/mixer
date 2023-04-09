@@ -1,3 +1,8 @@
+## [0.1.0] - 2022-12-01
+
+feat:
+- clone flag - clone local repository to /tmp and build it here
+
 ## [0.0.4] - 2022-12-01
 
 fix: 

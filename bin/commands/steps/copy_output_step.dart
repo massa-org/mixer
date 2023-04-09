@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dcli/dcli.dart';
 import 'package:riverpod/riverpod.dart';
 
+import '../../build_directory.dart';
 import '../../flavor_strategy/flavor_provider.dart';
 import '../../mixer_config/mixer_config.provider.dart';
 import '../../ref.dart';
@@ -45,12 +46,20 @@ class CopyOutputStep extends BuildStep {
     }
 
     if (ref.read(buildApkProvider)) {
-      File('./build/app/outputs/apk/release/app-release.apk')
-          .copySync(join(outputDirectory ?? '', '$result.apk'));
+      File(
+        join(
+          ref.read(buildDirectoryProvider),
+          './build/app/outputs/apk/release/app-release.apk',
+        ),
+      ).copySync(join(outputDirectory ?? '', '$result.apk'));
     }
     if (ref.read(buildAabProvider)) {
-      File('./build/app/outputs/bundle/release/app-release.aab')
-          .copySync(join(outputDirectory ?? '', '$result.aab'));
+      File(
+        join(
+          ref.read(buildDirectoryProvider),
+          './build/app/outputs/bundle/release/app-release.aab',
+        ),
+      ).copySync(join(outputDirectory ?? '', '$result.aab'));
     }
   }
 

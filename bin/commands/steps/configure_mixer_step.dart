@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dcli/dcli.dart';
 
+import '../../build_directory.dart';
 import '../../mixer_config/mixer_config.dart';
 import '../../mixer_config/mixer_config.provider.dart';
 import '../../ref.dart';
@@ -13,7 +14,9 @@ class ConfigureMixerStep extends BuildStep {
   @override
   Future<void> run() async {
     await super.run();
-    final mixerConfig = File(join(pwd, 'mixer_config.yaml'));
+    final mixerConfig = File(
+      join(ref.read(buildDirectoryProvider), 'mixer_config.yaml'),
+    );
     var config = const MixerConfig.flat();
     if (mixerConfig.existsSync()) {
       config = MixerConfig.fromJson(

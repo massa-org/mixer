@@ -1,5 +1,6 @@
 import 'package:dcli/dcli.dart';
 
+import '../../build_directory.dart';
 import '../../fvm/fvm_provider.dart';
 import '../../ref.dart';
 import 'build_step.dart';
@@ -10,7 +11,10 @@ class AndroidAppbundleBuildStep extends BuildStep {
     await super.run();
     final flutterExec = ref.read(useFvmProvider) ? 'fvm flutter' : 'flutter';
 
-    '$flutterExec build appbundle'.start(progress: Progress.print());
+    '$flutterExec build appbundle'.start(
+      progress: Progress.print(),
+      workingDirectory: ref.read(buildDirectoryProvider),
+    );
   }
 
   @override
@@ -23,7 +27,10 @@ class AndroidApkBuildStep extends BuildStep {
     await super.run();
     final flutterExec = ref.read(useFvmProvider) ? 'fvm flutter' : 'flutter';
 
-    '$flutterExec build apk'.start(progress: Progress.print());
+    '$flutterExec build apk'.start(
+      progress: Progress.print(),
+      workingDirectory: ref.read(buildDirectoryProvider),
+    );
   }
 
   @override

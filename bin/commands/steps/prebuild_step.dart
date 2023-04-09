@@ -1,5 +1,6 @@
 import 'package:dcli/dcli.dart';
 
+import '../../build_directory.dart';
 import '../../fvm/fvm_provider.dart';
 import '../../ref.dart';
 import 'build_step.dart';
@@ -13,12 +14,23 @@ class PrebuildStep extends BuildStep {
     await super.run();
     final flutterExec = ref.read(useFvmProvider) ? 'fvm flutter' : 'flutter';
 
-    '$flutterExec pub get'.start(progress: Progress.print());
+    '$flutterExec pub get'.start(
+      progress: Progress.print(),
+      workingDirectory: ref.read(buildDirectoryProvider),
+    );
     '$flutterExec pub run build_runner build --delete-conflicting-outputs'
-        .start(progress: Progress.print());
-    '$flutterExec pub run icons_launcher:create'
-        .start(progress: Progress.print());
-    '$flutterExec pub run the_splash'.start(progress: Progress.print());
+        .start(
+      progress: Progress.print(),
+      workingDirectory: ref.read(buildDirectoryProvider),
+    );
+    '$flutterExec pub run icons_launcher:create'.start(
+      progress: Progress.print(),
+      workingDirectory: ref.read(buildDirectoryProvider),
+    );
+    '$flutterExec pub run the_splash'.start(
+      progress: Progress.print(),
+      workingDirectory: ref.read(buildDirectoryProvider),
+    );
   }
 
   @override

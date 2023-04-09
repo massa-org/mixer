@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:dcli/dcli.dart';
 import 'package:riverpod/riverpod.dart';
 
+import '../../build_directory.dart';
 import '../../flavor_strategy/flavor_provider.dart';
 import '../../ref.dart';
 import '../../version/version_provider.dart';
@@ -64,8 +66,10 @@ class ReplaceFlavorParamsStep extends BuildStep {
 
     for (final r in replaceTable) {
       for (final f in r[0]) {
-        final content = File(f).readAsStringSync();
-        File(f).writeAsStringSync(content.replaceAll(r[1][0], r[1][1]));
+        final content =
+            File(join(ref.read(buildDirectoryProvider), f)).readAsStringSync();
+        File(join(ref.read(buildDirectoryProvider), f))
+            .writeAsStringSync(content.replaceAll(r[1][0], r[1][1]));
       }
     }
   }

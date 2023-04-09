@@ -9,6 +9,7 @@ import 'steps/configure_mixer_step.dart';
 import 'steps/git_check_step.dart';
 import 'steps/prepare_project_directory_step.dart';
 import 'steps/substep_step.dart';
+import 'steps/tmp_clone_step.dart';
 
 class FullBuildCommand extends Command<void> {
   @override
@@ -18,7 +19,11 @@ class FullBuildCommand extends Command<void> {
   String get name => 'full_build';
 
   @override
-  ArgParser get argParser => getDefaultArgParser();
+  ArgParser get argParser => getDefaultArgParser()
+    ..addFlag(
+      'clone',
+      help: 'clone project into /tmp and build it here',
+    );
 
   @override
   FutureOr<void> run() async {
@@ -27,6 +32,7 @@ class FullBuildCommand extends Command<void> {
 
     final step = SubstepStep(
       [
+        ...TmpCloneStep.fromArg(argResults),
         GitCheckStep(),
         // configure build system
         ConfigureMixerStep(),

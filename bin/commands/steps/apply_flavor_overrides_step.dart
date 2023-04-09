@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dcli/dcli.dart';
 import 'package:riverpod/riverpod.dart';
 
+import '../../build_directory.dart';
 import '../../flavor_strategy/flavor_provider.dart';
 import '../../ref.dart';
 import 'build_step.dart';
@@ -19,8 +20,10 @@ class ApplyFlavorOverridesStep extends BuildStep {
         );
       }
       // TODO rewrite to dart
-      'cp -r ${flavor.flavorOverrides!.path}/* ./'
-          .start(progress: Progress.print());
+      'cp -r ${flavor.flavorOverrides!.path}/* ./'.start(
+        progress: Progress.print(),
+        workingDirectory: ref.read(buildDirectoryProvider),
+      );
     }
   }
 

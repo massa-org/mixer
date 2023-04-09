@@ -1,3 +1,6 @@
+import 'package:dcli/dcli.dart';
+
+import '../../build_directory.dart';
 import '../../ref.dart';
 import '../../secrets_provider/secrets_provider.dart';
 import 'build_step.dart';
@@ -10,7 +13,8 @@ class AndroidGoogleFastlaneDeployStep extends BuildStep {
     final secrets = await ref.read(secretsProvider.future);
     final serviceKey = await secrets.getGoogleServiceKey();
 
-    serviceKey.copySync('./android/service_key.json');
+    serviceKey.copySync(
+        join(ref.read(buildDirectoryProvider), './android/service_key.json'));
     // TODO implement fastlane deploy
     print('exec fastlane');
   }
