@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dcli/dcli.dart';
+import 'package:path/path.dart';
 
 import '../../build_directory.dart';
 import '../../mixer_config/mixer_config.dart';

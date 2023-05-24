@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dcli/dcli.dart';
+import 'package:path/path.dart';
 
 import 'secrets_provider.dart';
 import 'secrets_tmp_dir_mixin.dart';

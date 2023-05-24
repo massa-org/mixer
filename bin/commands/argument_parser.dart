@@ -1,5 +1,5 @@
 import 'package:args/args.dart';
-import 'package:dcli/dcli.dart';
+import 'package:path/path.dart';
 
 import '../fvm/detect_fvm.dart';
 import '../fvm/fvm_provider.dart';

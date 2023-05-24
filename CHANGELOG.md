@@ -1,5 +1,7 @@
 ## [0.1.1] - 2022-12-01
 
+deps: 
+- update deps
 refactor(fvm):
 - flutterExec provider to override flutter command
 
