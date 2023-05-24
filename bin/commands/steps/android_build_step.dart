@@ -9,7 +9,7 @@ class AndroidAppbundleBuildStep extends BuildStep {
   @override
   Future<void> run() async {
     await super.run();
-    final flutterExec = ref.read(useFvmProvider) ? 'fvm flutter' : 'flutter';
+    final flutterExec = ref.read(flutterExecProvider);
 
     '$flutterExec build appbundle'.start(
       progress: Progress.print(),
@@ -25,7 +25,7 @@ class AndroidApkBuildStep extends BuildStep {
   @override
   Future<void> run() async {
     await super.run();
-    final flutterExec = ref.read(useFvmProvider) ? 'fvm flutter' : 'flutter';
+    final flutterExec = ref.read(flutterExecProvider);
 
     '$flutterExec build apk'.start(
       progress: Progress.print(),

@@ -12,7 +12,7 @@ class PrebuildStep extends BuildStep {
   @override
   Future<void> run() async {
     await super.run();
-    final flutterExec = ref.read(useFvmProvider) ? 'fvm flutter' : 'flutter';
+    final flutterExec = ref.read(flutterExecProvider);
 
     '$flutterExec pub get'.start(
       progress: Progress.print(),

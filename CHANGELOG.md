@@ -1,3 +1,8 @@
+## [0.1.1] - 2022-12-01
+
+refactor(fvm):
+- flutterExec provider to override flutter command
+
 ## [0.1.0] - 2022-12-01
 
 feat:
