@@ -22,6 +22,8 @@ class TestingSecretsProvider extends SecretsProvider
 
   @override
   FutureOr<File> getKeyJks() {
+    final keyFile = join(secretsTmpDir, 'key.jks');
+    "rm -f '$keyFile'".run;
     const keytoolAns = '''
 tmp_pass
 tmp_pass
@@ -34,7 +36,7 @@ tmp_pass
 yes
 
 ''';
-    final keyFile = join(secretsTmpDir, 'key.jks');
+
     ("echo '$keytoolAns'" |
             "keytool -genkey -v -keystore '$keyFile' -keyalg RSA -keysize 2048 -validity 10000 -alias key")
         .run;
