@@ -20,8 +20,8 @@ class ReplaceFlavorParamsStep extends BuildStep {
     final applicationName = flavor.applicationName;
     final deeplinkHost = flavor.applicationName;
 
-    final build = fullVersion.toString().split('+').last;
-    final version = fullVersion.toString().split('+').first;
+    final build = fullVersion.split('+').last;
+    final version = fullVersion.split('+').first;
 
     final replaceTable = [
       [

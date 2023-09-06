@@ -16,10 +16,10 @@ void setAndroidBuildConfiguration(ArgResults? argResults) {
       .read(outputDirectoryProvider.notifier)
       .update((state) => outputDirectory ?? state);
 
-  if (output?.endsWith('apk') == true) {
+  if (output?.endsWith('apk') ?? false) {
     ref.read(buildApkProvider.notifier).update((_) => true);
   }
-  if (output?.endsWith('aab') == true) {
+  if (output?.endsWith('aab') ?? false) {
     ref.read(buildAabProvider.notifier).update((_) => true);
   }
 

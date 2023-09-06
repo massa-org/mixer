@@ -25,7 +25,7 @@ class TmpCloneStep extends BuildStep {
   TmpCloneStep();
 
   static List<TmpCloneStep> fromArg(ArgResults? argResults) {
-    if ((argResults?['clone'] as bool?) == true) {
+    if ((argResults?['clone'] as bool?) ?? false) {
       return [TmpCloneStep()];
     }
 
