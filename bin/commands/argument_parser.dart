@@ -3,6 +3,7 @@ import 'package:path/path.dart';
 
 import '../fvm/detect_fvm.dart';
 import '../fvm/fvm_provider.dart';
+import '../interactive/interactive_provider.dart';
 import '../ref.dart';
 import '../secrets_provider/secrets_provider.dart';
 import '../secrets_provider/secrets_repository_provider.dart';
@@ -56,6 +57,11 @@ ArgParser getDefaultArgParser() => ArgParser()
     help: 'force build aab file',
     negatable: false,
     defaultsTo: null,
+  )
+  ..addFlag(
+    'ci',
+    help: 'disable all user interactions',
+    negatable: false,
   );
 
 void checkBuildTargets() {
@@ -78,6 +84,9 @@ Future<void> setArguments(ArgResults? argResults) async {
     ref.read(selectedSecretsProvider.notifier).update((_) => secrets);
   }
 
+  ref
+      .read(interactiveProvider.notifier)
+      .update((_) => getInteractive(argResults));
   ref.read(versionProvider.notifier).update((_) => getVersion(argResults));
   ref.read(useFvmProvider.notifier).update((_) => getUseFvm(argResults));
 

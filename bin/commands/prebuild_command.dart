@@ -6,6 +6,7 @@ import 'package:dcli/dcli.dart';
 
 import '../fvm/detect_fvm.dart';
 import '../fvm/fvm_provider.dart';
+import '../interactive/interactive_provider.dart';
 import '../ref.dart';
 import '../version/version_provider.dart';
 import 'argument_parser.dart';
@@ -38,6 +39,11 @@ class PrebuildCommand extends Command<void> {
     ..addFlag(
       'use-fvm',
       help: 'use `fvm flutter` instead of `flutter` command',
+    )
+    ..addFlag(
+      'ci',
+      help: 'disable user interactions',
+      negatable: false,
     );
 
   @override
@@ -46,6 +52,9 @@ class PrebuildCommand extends Command<void> {
 
     ref.read(versionProvider.notifier).update((_) => getVersion(argResults));
     ref.read(useFvmProvider.notifier).update((_) => getUseFvm(argResults));
+    ref
+        .read(interactiveProvider.notifier)
+        .update((_) => getInteractive(argResults));
 
     final step = SubstepStep(
       [
@@ -53,7 +62,7 @@ class PrebuildCommand extends Command<void> {
         // configure build system
         ConfigureMixerStep(),
         PrepareProjectDirectoryStep(),
-        ConfigureFlavorStep(userSelectedFlavor: flavor ?? 'fallback'),
+        ConfigureFlavorStep(userSelectedFlavor: flavor),
 
         // configure project before build
         ApplyFlavorOverridesStep(),

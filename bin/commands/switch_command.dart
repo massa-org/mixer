@@ -32,12 +32,8 @@ class SwitchFlavorCommand extends Command<void> {
     final step = SubstepStep(
       [
         ConfigureMixerStep(),
-        if (flavor == null)
-          ShowFlavorListStep('Flavor is not selected')
-        else ...[
-          ConfigureFlavorStep(userSelectedFlavor: flavor),
-          ApplyFlavorOverridesStep(),
-        ]
+        ConfigureFlavorStep(userSelectedFlavor: flavor),
+        ApplyFlavorOverridesStep(),
       ],
       name: 'SwitchConfig',
     );

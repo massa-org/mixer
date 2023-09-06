@@ -8,6 +8,7 @@ dependencies:
   collection: ^1.16.0
   dcli: ^3.0.2
   freezed_annotation: ^2.1.0
+  interact: ^2.2.0
   json_annotation: ^4.6.0
   path: ^1.8.3
   riverpod: ^2.4.0
@@ -20,5 +21,5 @@ dev_dependencies:
   json_serializable: ^6.3.1
   lint_hard: ^4.0.0
 
-dependecy_overrides:
-  win: ^5.0.0
+dependency_overrides:
+  win32: ^5.0.0
