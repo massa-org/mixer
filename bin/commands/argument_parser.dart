@@ -43,6 +43,7 @@ ArgParser getDefaultArgParser() => ArgParser()
   ..addFlag(
     'use-fvm',
     help: 'use `fvm flutter` instead of `flutter` command',
+    defaultsTo: null,
   )
   ..addFlag(
     'apk',
