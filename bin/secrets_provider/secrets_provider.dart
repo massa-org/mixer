@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:riverpod/riverpod.dart';
 
 import '../flavor_strategy/flavor_provider.dart';
+import '../utils/state_provider_future_extension.dart';
 import 'env_secrets_provider.dart';
 import 'git_secrets_provider.dart';
 import 'testing_secret_provider.dart';

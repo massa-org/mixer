@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:path/path.dart';
-import 'package:riverpod/riverpod.dart';
 
 import '../../build_directory.dart';
 import '../../flavor_strategy/flavor_provider.dart';
 import '../../ref.dart';
+import '../../utils/state_provider_future_extension.dart';
 import '../../version/version_provider.dart';
 import 'build_step.dart';
 

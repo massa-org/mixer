@@ -1,9 +1,9 @@
 import 'package:dcli/dcli.dart';
-import 'package:riverpod/riverpod.dart';
 
 import '../../build_directory.dart';
 import '../../flavor_strategy/flavor_provider.dart';
 import '../../ref.dart';
+import '../../utils/state_provider_future_extension.dart';
 import 'build_step.dart';
 
 // rewrite files with overrides from fallback flavor than with selected flavor
