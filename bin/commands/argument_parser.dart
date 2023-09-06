@@ -23,7 +23,12 @@ ArgParser getDefaultArgParser() => ArgParser()
   ..addOption(
     'secrets',
     help: 'secrets provider for build',
-    allowed: ['git', 'env', 'testing'],
+    allowed: [
+      'git',
+      'env',
+      'testing',
+      'dev',
+    ],
     defaultsTo: 'git',
   )
   ..addOption(

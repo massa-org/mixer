@@ -23,6 +23,7 @@ final secretsProvidersMap = <String, FutureOr<SecretsProvider> Function(Ref)>{
       .watch(flavorProvider.future)
       .then((value) => GitSecretsProvider(value.config.applicationId)),
   TestingSecretsProvider.providerName: (_) => TestingSecretsProvider(),
+  'dev': (_) => TestingSecretsProvider(),
   EnvSecretsProvider.providerName: (_) => EnvSecretsProvider(),
 };
 
