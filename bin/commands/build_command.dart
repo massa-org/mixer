@@ -33,7 +33,7 @@ class BuildCommand extends Command<void> {
   @override
   FutureOr<void> run() async {
     await setArguments(argResults);
-    checkBuildTargets();
+    await checkBuildTargets();
 
     final flavor = getFlavor(argResults);
     final step = SubstepStep(

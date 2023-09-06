@@ -1,9 +1,12 @@
+// ignore_for_file: always_put_control_body_on_new_line
+
 import 'package:args/args.dart';
 import 'package:path/path.dart';
 
 import '../fvm/detect_fvm.dart';
 import '../fvm/fvm_provider.dart';
 import '../interactive/interactive_provider.dart';
+import '../interactive/select_target.dart';
 import '../ref.dart';
 import '../secrets_provider/secrets_provider.dart';
 import '../secrets_provider/secrets_repository_provider.dart';
@@ -64,14 +67,27 @@ ArgParser getDefaultArgParser() => ArgParser()
     negatable: false,
   );
 
-void checkBuildTargets() {
+// must be call after set arguments
+Future<void> checkBuildTargets() async {
   final hasBuildTarget =
       ref.read(buildApkProvider) || ref.read(buildAabProvider);
-  if (!hasBuildTarget) {
-    throw Exception(
-      'nothing to build, target is not selected pass --apk or --aab option',
-    );
+
+  if (hasBuildTarget) return;
+  final userSelectedTarget = interactiveSelectBuildTarget();
+
+  switch (userSelectedTarget) {
+    case BuildTarget.apk:
+      ref.read(buildApkProvider.notifier).update((_) => true);
+      break;
+    case BuildTarget.aab:
+      ref.read(buildAabProvider.notifier).update((_) => true);
+      break;
+    case null:
+      throw Exception(
+        'nothing to build, target is not selected pass --apk or --aab option',
+      );
   }
+  await Future.microtask(() => null);
 }
 
 Future<void> setArguments(ArgResults? argResults) async {
