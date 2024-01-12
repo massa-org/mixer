@@ -13,7 +13,7 @@ import '../secrets_provider/secrets_repository_provider.dart';
 import '../version/version_provider.dart';
 import 'android_build_configuration.dart';
 
-ArgParser getDefaultArgParser() => ArgParser()
+ArgParser getBuildArgParser() => ArgParser()
   ..addOption(
     'deploy',
     help: 'deploy strategy',

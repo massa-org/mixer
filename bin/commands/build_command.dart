@@ -20,7 +20,7 @@ class BuildCommand extends Command<void> {
   String get name => 'build';
 
   @override
-  ArgParser get argParser => getDefaultArgParser()
+  ArgParser get argParser => getBuildArgParser()
     ..addOption(
       'flavor',
       help: 'which flavor to build, can be omit for flat project type',

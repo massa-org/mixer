@@ -20,7 +20,7 @@ class FullBuildCommand extends Command<void> {
   String get name => 'full_build';
 
   @override
-  ArgParser get argParser => getDefaultArgParser()
+  ArgParser get argParser => getBuildArgParser()
     ..addFlag(
       'clone',
       help: 'clone project into /tmp and build it here',
