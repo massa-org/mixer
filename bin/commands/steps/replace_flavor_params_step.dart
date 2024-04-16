@@ -18,7 +18,7 @@ class ReplaceFlavorParamsStep extends BuildStep {
     final flavor = (await ref.read(flavorProvider.future)).config;
     final applicationId = flavor.applicationId;
     final applicationName = flavor.applicationName;
-    final deeplinkHost = flavor.applicationName;
+    final deeplinkHost = flavor.deepLinkHost;
 
     final build = fullVersion.split('+').last;
     final version = fullVersion.split('+').first;
